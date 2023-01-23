@@ -1,0 +1,66 @@
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Main {
+    static String message ="";
+    public static void main(String[] args) throws Exception {
+        calc(message);
+        calculate();
+    }
+    static void calculate() throws Exception {
+        int a = 0;
+        int b = 0;
+        String[] actions = {"+", "-", "/", "*"};
+        String[] regexActions = {"\\+", "-", "/", "\\*"};
+        int actionIndex=-1;
+        for (int i = 0; i < actions.length; i++) {
+            if(message.contains(actions[i])){
+                actionIndex = i;
+                break;
+            }
+        }
+        if(actionIndex==-1){
+            System.out.println("Некорректное выражение");
+            return;
+        }
+        String[] data = message.split(regexActions[actionIndex]);
+
+
+        //конвертируем числа из строки в число
+
+        a = Integer.parseInt(data[0]);
+        b = Integer.parseInt(data[1]);
+
+        if (a >= 11 || a <= 0 || b >= 11 | b <= 0) {
+            System.out.println("Неподходящие числа.");
+            throw new Exception();
+        }
+
+        int result = 0;
+        switch (actions[actionIndex]){
+            case "+":
+                result = a+b;
+                break;
+            case "-":
+                result = a-b;
+                break;
+            case "*":
+                result = a*b;
+                break;
+            default:
+                result = a/b;
+                break;
+        }
+
+        System.out.println("Ответ: " + result);
+    }
+    public static String calc(String input) {
+        Scanner scn = new Scanner(System.in);
+        System.out.println("Введите выражение без пробелов: целое число (от 1 до 10), знак оператора (+ - * /), второе число. Формат: 'число+число'.");
+        input = scn.nextLine();
+
+        message=input;
+        return input;
+    }
+
+}
