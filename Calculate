@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
@@ -14,22 +13,27 @@ public class Main {
         String[] regexActions = {"\\+", "-", "/", "\\*"};
         int actionIndex=-1;
         for (int i = 0; i < actions.length; i++) {
+            //показываю, что наше сообщение содержит оператор из массива
             if(message.contains(actions[i])){
                 actionIndex = i;
                 break;
             }
         }
+        /* проверка, нашла ли знак, или пользователь ввел другой.
+        Проверка на минус единицу, тк если мы раннее нашли знак из массива,
+        то переменная автоматом будет больше либо равна 0*/
         if(actionIndex==-1){
             System.out.println("Некорректное выражение");
             return;
         }
+        /*Делю строчку, нахожу числа (разделитель - оператор).
+        * regexActions - потому что некоторые знаки нужно экранировать, тк они имеют синтаксическую
+        * значимость. */
         String[] data = message.split(regexActions[actionIndex]);
 
-
-        //конвертируем числа из строки в число
-
+        try {
         a = Integer.parseInt(data[0]);
-        b = Integer.parseInt(data[1]);
+        b = Integer.parseInt(data[1]); } catch (NumberFormatException e) {System.out.println("Введите целое чилсло");}
 
         if (a >= 11 || a <= 0 || b >= 11 | b <= 0) {
             System.out.println("Неподходящие числа.");
@@ -62,5 +66,4 @@ public class Main {
         message=input;
         return input;
     }
-
 }
